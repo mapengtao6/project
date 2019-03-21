@@ -1,47 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:orientation="vertical">
-    
+
+
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:scrollbars="vertical"
         android:fadingEdge="vertical"
-        >
+        android:scrollbars="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <com.bw.myproject.weiget.View
+                android:layout_width="match_parent"
+                android:layout_height="50dp"></com.bw.myproject.weiget.View>
 
             <com.recker.flybanner.FlyBanner
                 android:id="@+id/flybanner"
                 android:layout_width="match_parent"
-                android:layout_height="260dp"></com.recker.flybanner.FlyBanner>
+                android:layout_height="210dp"></com.recker.flybanner.FlyBanner>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/home_one"
+                android:gravity="center"
+                android:text="热销商品"
+                android:textColor="#FFB199"
+                android:textSize="19sp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/home_rlv1"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"></android.support.v7.widget.RecyclerView>
+                android:layout_height="250dp"
+                android:background="#C3C3C3"></android.support.v7.widget.RecyclerView>
 
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/home_rlv2"
                 android:layout_width="match_parent"
-                android:layout_height="210dp"></android.support.v7.widget.RecyclerView>
+                android:layout_height="210dp"
+                android:layout_marginTop="10dp"
+                android:background="#C3C3C3"></android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/home_three"
+                android:gravity="center"
+                android:text="热销商品"
+                android:textColor="#FF8895"
+                android:textSize="19sp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/home_rlv3"
                 android:layout_width="match_parent"
-
-                android:layout_height="300dp"></android.support.v7.widget.RecyclerView>
-
-
+                android:layout_height="300dp"
+                android:background="#C3C3C3"></android.support.v7.widget.RecyclerView>
 
         </LinearLayout>
     </ScrollView>
-
 
 </LinearLayout>

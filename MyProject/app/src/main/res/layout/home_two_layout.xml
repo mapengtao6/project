@@ -22,13 +22,14 @@
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/hometwo_sdv"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="130dp"
+            android:layout_margin="15dp"
+            android:layout_height="130dp"
             android:layout_gravity="center"
             app:placeholderImage="@drawable/s6"
             app:roundBottomLeft="true"
             app:roundBottomRight="true"
-            app:roundTopLeft="false"
+            app:roundTopLeft="true"
             app:roundTopRight="true"
             app:roundedCornerRadius="20dp" />
 
@@ -39,8 +40,9 @@
 
             <TextView
                 android:id="@+id/hometwo_title"
+                android:layout_marginTop="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="75dp"
+                android:layout_height="65dp"
                 android:gravity="center"
                 android:text="哈哈"
                 android:textSize="19dp" />
@@ -48,8 +50,9 @@
             <TextView
                 android:id="@+id/hometwo_price"
                 android:layout_width="wrap_content"
-                android:layout_height="75dp"
+                android:layout_height="65dp"
                 android:gravity="center"
+                android:layout_marginLeft="50dp"
                 android:text="价格"
                 android:textColor="#f00"
                 android:textSize="19dp" />

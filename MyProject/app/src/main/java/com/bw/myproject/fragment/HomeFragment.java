@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment implements HomeView {
 
         rlv2.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        rlv3.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        rlv3.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
 
         presenter = new HomePresenter(this);
