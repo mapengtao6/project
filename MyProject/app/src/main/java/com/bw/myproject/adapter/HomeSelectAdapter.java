@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bw.myproject.R;
-import com.bw.myproject.bean.HomeBean;
+import com.bw.myproject.bean.SearchBean;
+import com.bw.myproject.bean.SearchBean;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
@@ -22,22 +23,23 @@ import java.util.List;
  * <p>
  * Description:
  */
-public class HomeTwoAdapter extends RecyclerView.Adapter<HomeTwoAdapter.MyViewHolder> {
+public class HomeSelectAdapter extends RecyclerView.Adapter<HomeSelectAdapter.MyViewHolder> {
 
     Context context;
-    List<HomeBean.ResultBean.MlssBean.CommodityListBeanXX> commodityListBeanXXES;
+    List<SearchBean.ResultBean> resultBean;
 
-    public HomeTwoAdapter(Context context, List<HomeBean.ResultBean.MlssBean.CommodityListBeanXX> commodityListBeanXXES) {
+    public HomeSelectAdapter(Context context, List<SearchBean.ResultBean> resultBean) {
         this.context = context;
-        this.commodityListBeanXXES = commodityListBeanXXES;
+        this.resultBean = resultBean;
     }
+
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
 
-        View view = LayoutInflater.from(context).inflate(R.layout.home_two_layout, null, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.home_select, null, false);
 
         MyViewHolder myViewHolder = new MyViewHolder(view);
 
@@ -48,31 +50,32 @@ public class HomeTwoAdapter extends RecyclerView.Adapter<HomeTwoAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
 
-        HomeBean.ResultBean.MlssBean.CommodityListBeanXX commodityListBeanXX = commodityListBeanXXES.get(i);
-        Uri uri = Uri.parse(commodityListBeanXX.getMasterPic());
-        myViewHolder.sdv.setImageURI(uri);
+        SearchBean.ResultBean resultBean = this.resultBean.get(i);
+        myViewHolder.price.setText(resultBean.getMasterPic());
 
-        myViewHolder.price.setText("¥"+commodityListBeanXX.getPrice());
-        myViewHolder.title.setText(commodityListBeanXX.getCommodityName());
+        myViewHolder.title.setText(resultBean.getCommodityName());
+
+        Uri uri = Uri.parse(resultBean.getMasterPic());
+        myViewHolder.sdv.setImageURI(uri);
     }
 
     @Override
     public int getItemCount() {
-        return commodityListBeanXXES.size();
+        return resultBean.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         private final SimpleDraweeView sdv;
-        private final TextView price;
         private final TextView title;
+        private final TextView price;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            sdv = itemView.findViewById(R.id.hometwo_sdv);
-            price = itemView.findViewById(R.id.hometwo_price);
-            title = itemView.findViewById(R.id.hometwo_title);
+            sdv = itemView.findViewById(R.id.homeselect_sdv);
+            title = itemView.findViewById(R.id.homeselect_title);
+            price = itemView.findViewById(R.id.homeselect_price);
         }
     }
 }

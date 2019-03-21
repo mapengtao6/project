@@ -1,6 +1,7 @@
 package com.bw.myproject.presenter;
 
 import com.bw.myproject.bean.HomeBean;
+import com.bw.myproject.bean.SearchBean;
 import com.bw.myproject.fragment.HomeFragment;
 import com.bw.myproject.model.HomeModel;
 import com.bw.myproject.view.HomeView;
@@ -34,5 +35,16 @@ public class HomePresenter {
                 homeView.getDataView(homeBean);
             }
         });
+    }
+
+    public void search(String keyword, int page, int count) {
+        homeModel.search(keyword,page,count);
+        homeModel.setHomeSelLisener(new HomeModel.onHomeSelLisener() {
+            @Override
+            public void onResults(SearchBean searchBean) {
+                homeView.getDataViews(searchBean);
+            }
+        });
+
     }
 }

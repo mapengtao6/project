@@ -1,5 +1,6 @@
 package com.bw.myproject.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,18 +8,20 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bw.myproject.HomeSelectActivity;
 import com.bw.myproject.R;
 import com.bw.myproject.adapter.HomeOneAdapter;
 import com.bw.myproject.adapter.HomeThreeAdapter;
 import com.bw.myproject.adapter.HomeTwoAdapter;
 import com.bw.myproject.bean.HomeBean;
+import com.bw.myproject.bean.SearchBean;
 import com.bw.myproject.presenter.HomePresenter;
 import com.bw.myproject.view.HomeView;
+import com.bw.myproject.weiget.Custom_View;
 import com.recker.flybanner.FlyBanner;
 
 import java.util.ArrayList;
@@ -38,7 +41,6 @@ import butterknife.Unbinder;
 public class HomeFragment extends Fragment implements HomeView {
     @BindView(R.id.home_rlv1)
     RecyclerView rlv1;
-    Unbinder unbinder;
     @BindView(R.id.home_rlv2)
     RecyclerView rlv2;
     @BindView(R.id.home_rlv3)
@@ -47,18 +49,45 @@ public class HomeFragment extends Fragment implements HomeView {
     FlyBanner flybanner;
     private HomePresenter presenter;
 
+    public String keyword = "高跟鞋";
+    public int page = 1;
+    public int count = 10;
+    private Unbinder unbinder;
+    private Custom_View custom_view;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.home_fragment, null, false);
-        unbinder = ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this,view);
+
+        custom_view = view.findViewById(R.id.custom_view);
 
 //        第一块
         getOne();
 //        轮播
         getLun();
+
+        getSerach();
+
         return view;
+    }
+
+    private void getSerach() {
+
+
+        custom_view.setCustLisenter(new Custom_View.onCustLisenter() {
+            @Override
+            public void onCust(String keyword) {
+
+                Intent intent = new Intent(getActivity(),HomeSelectActivity.class);
+                intent.putExtra("keyword",keyword);
+
+                startActivity(new Intent(intent));
+            }
+        });
+
     }
 
     //    轮播
@@ -71,7 +100,7 @@ public class HomeFragment extends Fragment implements HomeView {
         banner.add("http://172.17.8.100/images/small/banner/px.png");
         banner.add("http://172.17.8.100/images/small/banner/wy.png");
 
-        for (int i = 0; i < banner.size(); i++){
+        for (int i = 0; i < banner.size(); i++) {
             banner.get(i);
         }
 
@@ -84,12 +113,12 @@ public class HomeFragment extends Fragment implements HomeView {
 //        rlv1.setg(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
 //        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
 //        rlv1.setLayoutManager(layoutManager);
+//        LinearLayoutManager ms = new LinearLayoutManager(getActivity());
+//        ms.setOrientation(LinearLayoutManager.HORIZONTAL);
+//        rlv1.setLayoutManager(ms);
 
 //                设置布局
-//        rlv1.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        LinearLayoutManager ms = new LinearLayoutManager(getActivity());
-        ms.setOrientation(LinearLayoutManager.HORIZONTAL);
-        rlv1.setLayoutManager(ms);
+        rlv1.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 
         rlv2.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -99,7 +128,11 @@ public class HomeFragment extends Fragment implements HomeView {
         presenter = new HomePresenter(this);
 
         presenter.home();
+
+//        搜索
+        presenter.search(keyword, page, count);
     }
+
 
     @Override
     public void onDestroyView() {
@@ -141,5 +174,10 @@ public class HomeFragment extends Fragment implements HomeView {
 //        适配器
         HomeThreeAdapter homeThreeAdapter = new HomeThreeAdapter(getActivity(), commodityList3);
         rlv3.setAdapter(homeThreeAdapter);
+    }
+
+    @Override
+    public void getDataViews(SearchBean searchBean) {
+
     }
 }

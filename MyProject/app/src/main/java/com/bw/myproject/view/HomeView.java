@@ -1,6 +1,7 @@
 package com.bw.myproject.view;
 
 import com.bw.myproject.bean.HomeBean;
+import com.bw.myproject.bean.SearchBean;
 
 /**
  * Time:2019.03.20--19:30
@@ -12,4 +13,5 @@ import com.bw.myproject.bean.HomeBean;
 public interface HomeView {
 
     void getDataView(HomeBean homeBean);
+    void getDataViews(SearchBean searchBean);
 }
