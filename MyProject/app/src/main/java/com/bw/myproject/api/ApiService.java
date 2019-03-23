@@ -1,5 +1,6 @@
 package com.bw.myproject.api;
 
+import com.bw.myproject.bean.DetailBean;
 import com.bw.myproject.bean.HomeBean;
 import com.bw.myproject.bean.SearchBean;
 
@@ -16,6 +17,7 @@ import retrofit2.http.Query;
  */
 public interface ApiService {
 
+    //    首页、
     //    http://172.17.8.100/small/commodity/v1/commodityList
     @GET("commodityList")
     Flowable<HomeBean> getHome();
@@ -25,4 +27,8 @@ public interface ApiService {
     @GET("findCommodityByKeyword")
     Flowable<SearchBean> getSerach(@Query("keyword") String keyword, @Query("page") int page, @Query("count") int count);
 
+    //    详情
+    //    http://172.17.8.100/small/commodity/v1/findCommodityDetailsById?commodityId=44
+    @GET("findCommodityDetailsById")
+    Flowable<DetailBean> getDetail(@Query("commodityId") String commodityId);
 }

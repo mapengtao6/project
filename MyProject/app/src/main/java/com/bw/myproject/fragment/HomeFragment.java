@@ -130,7 +130,7 @@ public class HomeFragment extends Fragment implements HomeView {
         presenter.home();
 
 //        搜索
-        presenter.search(keyword, page, count);
+//        presenter.search(keyword, page, count);
     }
 
 
@@ -174,10 +174,5 @@ public class HomeFragment extends Fragment implements HomeView {
 //        适配器
         HomeThreeAdapter homeThreeAdapter = new HomeThreeAdapter(getActivity(), commodityList3);
         rlv3.setAdapter(homeThreeAdapter);
-    }
-
-    @Override
-    public void getDataViews(SearchBean searchBean) {
-
     }
 }

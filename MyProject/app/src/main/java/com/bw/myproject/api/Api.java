@@ -9,11 +9,16 @@ package com.bw.myproject.api;
  */
 public class Api {
 
+    //    首页
 //    http://172.17.8.100/small/commodity/v1/commodityList
-
     public static final String Home_Url = "http://172.17.8.100/small/commodity/v1/";
 
+    //    首页搜索
 //    http://172.17.8.100/small/commodity/v1/findCommodityByKeyword?keyword=%E9%AB%98%E8%B7%9F%E9%9E%8B&page=1&count=10
-
     public static final String Serarch_Url = "http://172.17.8.100/small/commodity/v1/";
+
+//    详情
+//    http://172.17.8.100/small/commodity/v1/findCommodityDetailsById?commodityId=44
+    public static final String Details_Url = "http://172.17.8.100/small/commodity/v1/";
+
 }

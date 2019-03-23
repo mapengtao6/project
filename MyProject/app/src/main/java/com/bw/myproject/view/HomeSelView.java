@@ -10,8 +10,10 @@ import com.bw.myproject.bean.SearchBean;
  * <p>
  * Description:
  */
-public interface HomeView {
+public interface HomeSelView {
 
-    void getDataView(HomeBean homeBean);
+
+    void getDataViews(SearchBean searchBean);
+
 
 }

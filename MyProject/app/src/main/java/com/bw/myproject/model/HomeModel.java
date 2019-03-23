@@ -56,38 +56,7 @@ public class HomeModel {
                 });
     }
 
-    public void search(String keyword, int page, int count) {
 
-        ApiService apiService = RetrofitUtils.getInstance().setCreate(Api.Serarch_Url, ApiService.class);
-
-        Flowable<SearchBean> flowable = apiService.getSerach(keyword, page, count);
-
-        flowable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSubscriber<SearchBean>() {
-                    @Override
-                    public void onNext(SearchBean searchBean) {
-
-                      /*  List<SearchBean.ResultBean> result = searchBean.getResult();
-
-                        Log.i("xxxx",result.toString());*/
-
-                        if (homeSelLisener != null) {
-                            homeSelLisener.onResults(searchBean);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable t) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
 
     //    创建
     public interface onHomeLisenter {
@@ -103,13 +72,5 @@ public class HomeModel {
         this.homeLisenter = onHomeLisenter;
     }
 
-    public interface onHomeSelLisener {
-        void onResults(SearchBean searchBean);
-    }
 
-    public onHomeSelLisener homeSelLisener;
-
-    public void setHomeSelLisener(onHomeSelLisener onHomeSelLisener) {
-        this.homeSelLisener = onHomeSelLisener;
-    }
 }

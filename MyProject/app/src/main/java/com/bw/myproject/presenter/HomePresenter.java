@@ -22,7 +22,7 @@ public class HomePresenter {
     public HomePresenter(HomeView view) {
         homeModel = new HomeModel();
 
-        homeView = view;
+       homeView = view ;
     }
 
     public void home() {
@@ -35,16 +35,5 @@ public class HomePresenter {
                 homeView.getDataView(homeBean);
             }
         });
-    }
-
-    public void search(String keyword, int page, int count) {
-        homeModel.search(keyword,page,count);
-        homeModel.setHomeSelLisener(new HomeModel.onHomeSelLisener() {
-            @Override
-            public void onResults(SearchBean searchBean) {
-                homeView.getDataViews(searchBean);
-            }
-        });
-
     }
 }
