@@ -5,6 +5,7 @@
     android:orientation="horizontal">
 
     <ImageView
+        android:id="@+id/search_order"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/channel" />
@@ -12,9 +13,9 @@
     <EditText
         android:id="@+id/search_seek"
         android:layout_width="0dp"
-        android:background="@drawable/home_search_shape"
         android:layout_height="40dp"
         android:layout_weight="1"
+        android:background="@drawable/home_search_shape"
         android:gravity="center"
         android:hint="请输入搜索内容" />
 

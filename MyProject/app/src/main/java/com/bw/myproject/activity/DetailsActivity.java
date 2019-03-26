@@ -32,7 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import qiu.niorgai.StatusBarCompat;
 
-public class DetailsActivity extends AppCompatActivity implements DetailView {
+public class DetailsActivity extends AppCompatActivity {
     private IdeaViewPager viewPager;
     private IdeaScrollView ideaScrollView;
     private TextView text;
@@ -42,64 +42,52 @@ public class DetailsActivity extends AppCompatActivity implements DetailView {
     private ImageView icon;
     private View layer;
     private float currentPercentage = 0;
-    private RadioGroup.OnCheckedChangeListener radioGroupListener =new RadioGroup.OnCheckedChangeListener() {
+    private RadioGroup.OnCheckedChangeListener radioGroupListener = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-            for(int i=0;i<radioGroup.getChildCount();i++){
+            for (int i = 0; i < radioGroup.getChildCount(); i++) {
                 RadioButton radioButton = (RadioButton) radioGroup.getChildAt(i);
-                radioButton.setTextColor(radioButton.isChecked()?getRadioCheckedAlphaColor(currentPercentage):getRadioAlphaColor(currentPercentage));
-                if(radioButton.isChecked()&&isNeedScrollTo){
+                radioButton.setTextColor(radioButton.isChecked() ? getRadioCheckedAlphaColor(currentPercentage) : getRadioAlphaColor(currentPercentage));
+                if (radioButton.isChecked() && isNeedScrollTo) {
                     ideaScrollView.setPosition(i);
                 }
             }
         }
     };
     private boolean isNeedScrollTo = true;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-        initData();
-
-    }
-
-    @Override
-    public void Detail(DetailBean detailBean) {
-        DetailBean.ResultBean result = detailBean.getResult();
-
-//        DetailAdapter detailAdapter = new DetailAdapter(this, result);
-
-    }
-
-    private void initData() {
-
+//-------------------------------------------------------------------------
         StatusBarCompat.translucentStatusBar(this);
-        header = (LinearLayout)findViewById(R.id.header);
-        headerParent = (LinearLayout)findViewById(R.id.headerParent);
-        icon = (ImageView)findViewById(R.id.icon);
-        radioGroup = (RadioGroup)findViewById(R.id.radioGroup);
-        ideaScrollView = (IdeaScrollView)findViewById(R.id.ideaScrollView);
-        viewPager = (IdeaViewPager)findViewById(R.id.viewPager);
+        header = (LinearLayout) findViewById(R.id.header);
+        headerParent = (LinearLayout) findViewById(R.id.headerParent);
+        icon = (ImageView) findViewById(R.id.icon);
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        ideaScrollView = (IdeaScrollView) findViewById(R.id.ideaScrollView);
+        viewPager = (IdeaViewPager) findViewById(R.id.viewPager);
         layer = findViewById(R.id.layer);
 
-        Rect rectangle= new Rect();
+        Rect rectangle = new Rect();
         getWindow().getDecorView().getWindowVisibleDisplayFrame(rectangle);
-        ideaScrollView.setViewPager(viewPager,getMeasureHeight(headerParent)-rectangle.top);
+        ideaScrollView.setViewPager(viewPager, getMeasureHeight(headerParent) - rectangle.top);
         icon.setImageAlpha(0);
         radioGroup.setAlpha(0);
         radioGroup.check(radioGroup.getChildAt(0).getId());
 
         View one = findViewById(R.id.one);
         View two = findViewById(R.id.two);
-        View four = findViewById(R.id.four);
         View three = findViewById(R.id.three);
+        View four = findViewById(R.id.four);
         ArrayList<Integer> araryDistance = new ArrayList<>();
 
         araryDistance.add(0);
-        araryDistance.add(getMeasureHeight(one)-getMeasureHeight(headerParent));
-        araryDistance.add(getMeasureHeight(one)+getMeasureHeight(two)-getMeasureHeight(headerParent));
-        araryDistance.add(getMeasureHeight(one)+getMeasureHeight(two)+getMeasureHeight(three)-getMeasureHeight(headerParent));
+        araryDistance.add(getMeasureHeight(one) - getMeasureHeight(headerParent));
+        araryDistance.add(getMeasureHeight(one) + getMeasureHeight(two) - getMeasureHeight(headerParent));
+        araryDistance.add(getMeasureHeight(one) + getMeasureHeight(two) + getMeasureHeight(three) - getMeasureHeight(headerParent));
 
         ideaScrollView.setArrayDistance(araryDistance);
 
@@ -107,11 +95,11 @@ public class DetailsActivity extends AppCompatActivity implements DetailView {
             @Override
             public void onChanged(float percentage) {
 
-                int color = getAlphaColor(percentage>0.9f?1.0f:percentage);
+                int color = getAlphaColor(percentage > 0.9f ? 1.0f : percentage);
                 header.setBackgroundDrawable(new ColorDrawable(color));
                 radioGroup.setBackgroundDrawable(new ColorDrawable(color));
-                icon.setImageAlpha((int) ((percentage>0.9f?1.0f:percentage)*255));
-                radioGroup.setAlpha((percentage>0.9f?1.0f:percentage)*255);
+                icon.setImageAlpha((int) ((percentage > 0.9f ? 1.0f : percentage) * 255));
+                radioGroup.setAlpha((percentage > 0.9f ? 1.0f : percentage) * 255);
 
                 setRadioButtonTextColor(percentage);
 
@@ -138,7 +126,21 @@ public class DetailsActivity extends AppCompatActivity implements DetailView {
         });
 
         radioGroup.setOnCheckedChangeListener(radioGroupListener);
+
+        //-------------------------------------------------------------------------
+
+
+//        initData();
+
     }
+
+  /*  @Override
+    public void Detail(DetailBean detailBean) {
+        DetailBean.ResultBean result = detailBean.getResult();
+
+//        DetailAdapter detailAdapter = new DetailAdapter(this, result);
+
+    }*/
 
     public void setRadioButtonTextColor(float percentage){
         if(Math.abs(percentage-currentPercentage)>=0.1f){
@@ -174,5 +176,4 @@ public class DetailsActivity extends AppCompatActivity implements DetailView {
     public int getRadioAlphaColor(float f){
         return Color.argb((int) (f*255),0xFF,0xFF,0xFF);
     }
-
 }

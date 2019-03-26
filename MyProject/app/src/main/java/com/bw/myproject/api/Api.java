@@ -28,4 +28,16 @@ public class Api {
 
     //    登录
     public static final String Login_Url = "small/user/v1/login";
+
+    //    分类一级
+    //    http://172.17.8.100/small/commodity/v1/findFirstCategory
+    public static final String Order_Url = "small/commodity/v1/findFirstCategory";
+
+    //    分类二级
+//    http://172.17.8.100/small/commodity/v1/findSecondCategory?firstCategoryId=1001003
+    public static final String OrderTwo_Url = "small/commodity/v1/findSecondCategory";
+
+    //    分类二级查询
+//    http://172.17.8.100/small/commodity/v1/findCommodityByCategory?page=1&count=5&categoryId=1001002001;
+    public static final String OrderSel_Url = "small/commodity/v1/findCommodityByCategory?page=1&count=5";
 }

@@ -3,8 +3,11 @@ package com.bw.myproject.api;
 import com.bw.myproject.bean.DetailBean;
 import com.bw.myproject.bean.HomeBean;
 import com.bw.myproject.bean.LoginBean;
+import com.bw.myproject.bean.OneOrderBean;
 import com.bw.myproject.bean.RegBean;
 import com.bw.myproject.bean.SearchBean;
+import com.bw.myproject.bean.SelOrderBean;
+import com.bw.myproject.bean.TwoOrdeBean;
 
 import java.util.Map;
 
@@ -53,4 +56,21 @@ public interface ApiService {
     @POST(Api.Login_Url)
     @FormUrlEncoded
     Flowable<LoginBean> getLogin(@FieldMap Map<String, String> map);
+
+    //    分类一级
+    //    http://172.17.8.100/small/commodity/v1/findFirstCategory
+    @GET(Api.Order_Url)
+    Flowable<OneOrderBean> getOneOrder();
+
+    //    分类二级
+    //    http://172.17.8.100/small/commodity/v1/findSecondCategory?firstCategoryId=1001003
+    @GET(Api.OrderTwo_Url)
+    Flowable<TwoOrdeBean> getTwoOrder(@Query("firstCategoryId") String firstCategoryId);
+
+
+    //    分类二级查询
+    //    http://172.17.8.100/small/commodity/v1/findCommodityByCategory?page=1&count=5&categoryId=1001002001;
+    @GET(Api.OrderSel_Url)
+    Flowable<SelOrderBean> getSelOrder(@Query("categoryId") String categoryId);
+
 }
