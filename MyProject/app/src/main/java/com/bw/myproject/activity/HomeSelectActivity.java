@@ -1,4 +1,4 @@
-package com.bw.myproject;
+package com.bw.myproject.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.bawei.swiperefreshlayoutlibrary.SwipyRefreshLayout;
 import com.bawei.swiperefreshlayoutlibrary.SwipyRefreshLayoutDirection;
+import com.bw.myproject.R;
 import com.bw.myproject.adapter.HomeSelectAdapter;
 import com.bw.myproject.bean.SearchBean;
 import com.bw.myproject.presenter.HomeSelPresenter;
@@ -46,7 +47,10 @@ public class HomeSelectActivity extends AppCompatActivity implements HomeSelView
 
         keyword = intent.getStringExtra("keyword");
 
+
         presenter = new HomeSelPresenter(this);
+
+        presenter.addachView(this);
 
 
         if (keyword == keyword) {
@@ -116,5 +120,9 @@ public class HomeSelectActivity extends AppCompatActivity implements HomeSelView
         rlv.setAdapter(homeSelectAdapter);
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.deatchView();
+    }
 }

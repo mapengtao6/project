@@ -1,9 +1,11 @@
 package com.bw.myproject.presenter;
 
-import com.bw.myproject.HomeSelectActivity;
 import com.bw.myproject.bean.SearchBean;
 import com.bw.myproject.model.HomeSelModel;
 import com.bw.myproject.view.HomeSelView;
+
+import java.lang.ref.Reference;
+import java.lang.ref.WeakReference;
 
 /**
  * Time:2019.03.22--14:25
@@ -12,10 +14,24 @@ import com.bw.myproject.view.HomeSelView;
  * <p>
  * Description:
  */
-public class HomeSelPresenter {
+public class HomeSelPresenter<T> {
 
+    private Reference<T> tReference;
     private final HomeSelModel homeSelModel;
     private final HomeSelView homeSelView;
+
+    public void addachView(T t) {
+
+        tReference = new WeakReference<T>(t);
+    }
+
+    public void deatchView() {
+
+        if (tReference != null) {
+            tReference.clear();
+            tReference = null;
+        }
+    }
 
     public HomeSelPresenter(HomeSelView view) {
         homeSelModel = new HomeSelModel();

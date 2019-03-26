@@ -20,7 +20,7 @@ import io.reactivex.subscribers.DisposableSubscriber;
 public class HomeSelModel {
     public void search(String keyword, int page, int count) {
 
-        ApiService apiService = RetrofitUtils.getInstance().setCreate(Api.Serarch_Url, ApiService.class);
+        ApiService apiService = RetrofitUtils.getInstance().setCreate(ApiService.class);
 
         Flowable<SearchBean> flowable = apiService.getSerach(keyword, page, count);
 

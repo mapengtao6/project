@@ -4,8 +4,10 @@ import android.util.Log;
 
 import com.bw.myproject.api.Api;
 import com.bw.myproject.api.ApiService;
-import com.bw.myproject.bean.DetailBean;
+import com.bw.myproject.bean.RegBean;
 import com.bw.myproject.utils.RetrofitUtils;
+
+import java.util.Map;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -13,37 +15,39 @@ import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
 
 /**
- * Time:2019.03.22--21:17
+ * Time:2019.03.23--15:42
  * <p>
  * Author:马鹏涛
  * <p>
  * Description:
  */
-public class DetailModel {
-    public void detail(String commodityId) {
+public class RegModel {
+
+    public void reg(Map<String, String> param) {
 
         ApiService apiService = RetrofitUtils.getInstance().setCreate(ApiService.class);
 
-        Flowable<DetailBean> flowable = apiService.getDetail(commodityId);
+        Flowable<RegBean> flowable = apiService.getReg(param);
 
+//        Log.i("kkkk",phone+pwd);
         flowable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSubscriber<DetailBean>() {
+                .subscribeWith(new DisposableSubscriber<RegBean>() {
                     @Override
-                    public void onNext(DetailBean detailBean) {
+                    public void onNext(RegBean regBean) {
 
-//                        DetailBean.ResultBean result = detailBean.getResult();
+//                        Log.i("oooo",regBean.getStatus().toString());
 
-//                        Log.i("llll",result.toString());
+//                        Log.i("rrrr", regBean.toString());
 
-                        if (detailLisenter != null) {
-                            detailLisenter.onDetail(detailBean);
+                        if (reginLisenter != null) {
+                            reginLisenter.onReg(regBean);
                         }
                     }
 
                     @Override
                     public void onError(Throwable t) {
-
+                        Log.i("rrrr", t.toString());
                     }
 
                     @Override
@@ -53,13 +57,13 @@ public class DetailModel {
                 });
     }
 
-    public interface onDetailLisenter {
-        void onDetail(DetailBean detailBean);
+    public interface onReginLisenter {
+        void onReg(RegBean regBean);
     }
 
-    public onDetailLisenter detailLisenter;
+    public onReginLisenter reginLisenter;
 
-    public void setDetailLisenter(onDetailLisenter onDetailLisenter) {
-        this.detailLisenter = onDetailLisenter;
+    public void setReginLisenter(onReginLisenter onReginLisenter) {
+        this.reginLisenter = onReginLisenter;
     }
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".HomeSelectActivity">
+    tools:context=".activity.HomeSelectActivity">
 
     <com.bawei.swiperefreshlayoutlibrary.SwipyRefreshLayout
         android:id="@+id/homesel_srl"

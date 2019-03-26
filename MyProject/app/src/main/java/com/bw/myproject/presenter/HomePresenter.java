@@ -6,6 +6,9 @@ import com.bw.myproject.fragment.HomeFragment;
 import com.bw.myproject.model.HomeModel;
 import com.bw.myproject.view.HomeView;
 
+import java.lang.ref.Reference;
+import java.lang.ref.WeakReference;
+
 /**
  * Time:2019.03.20--19:20
  * <p>
@@ -13,10 +16,24 @@ import com.bw.myproject.view.HomeView;
  * <p>
  * Description:
  */
-public class HomePresenter {
+public class HomePresenter<T> {
 
+    private Reference<T> tReference;
     private final HomeModel homeModel;
     private final HomeView homeView;
+
+    public void addachView(T t) {
+
+        tReference = new WeakReference<T>(t);
+    }
+
+    public void deatchView() {
+
+        if (tReference != null) {
+            tReference.clear();
+            tReference = null;
+        }
+    }
 
     //    实例化
     public HomePresenter(HomeView view) {

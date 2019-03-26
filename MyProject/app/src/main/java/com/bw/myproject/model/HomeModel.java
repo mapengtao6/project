@@ -26,7 +26,7 @@ public class HomeModel {
 
     public void home() {
 
-        ApiService apiService = RetrofitUtils.getInstance().setCreate(Api.Home_Url, ApiService.class);
+        ApiService apiService = RetrofitUtils.getInstance().setCreate(ApiService.class);
 
         Flowable<HomeBean> flowable = apiService.getHome();
 

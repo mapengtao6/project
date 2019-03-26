@@ -72,7 +72,8 @@ public class RetrofitUtils {
 
         retrofit = new Retrofit
                 .Builder()
-                .baseUrl(Api.Home_Url)
+                .client(getOkHttpClient())
+                .baseUrl(Api.Base_Url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
@@ -81,7 +82,7 @@ public class RetrofitUtils {
         return retrofit;
     }
 
-    public <T> T setCreate(String URL, Class<T> apiService) {
+    public <T> T setCreate( Class<T> apiService) {
 
         Retrofit retrofit = getRetrofit();
 

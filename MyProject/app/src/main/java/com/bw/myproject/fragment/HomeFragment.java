@@ -12,13 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bw.myproject.HomeSelectActivity;
+import com.bw.myproject.activity.HomeSelectActivity;
 import com.bw.myproject.R;
 import com.bw.myproject.adapter.HomeOneAdapter;
 import com.bw.myproject.adapter.HomeThreeAdapter;
 import com.bw.myproject.adapter.HomeTwoAdapter;
 import com.bw.myproject.bean.HomeBean;
-import com.bw.myproject.bean.SearchBean;
 import com.bw.myproject.presenter.HomePresenter;
 import com.bw.myproject.view.HomeView;
 import com.bw.myproject.weiget.Custom_View;
@@ -60,7 +59,7 @@ public class HomeFragment extends Fragment implements HomeView {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.home_fragment, null, false);
-        unbinder = ButterKnife.bind(this,view);
+        unbinder = ButterKnife.bind(this, view);
 
         custom_view = view.findViewById(R.id.custom_view);
 
@@ -81,8 +80,8 @@ public class HomeFragment extends Fragment implements HomeView {
             @Override
             public void onCust(String keyword) {
 
-                Intent intent = new Intent(getActivity(),HomeSelectActivity.class);
-                intent.putExtra("keyword",keyword);
+                Intent intent = new Intent(getActivity(), HomeSelectActivity.class);
+                intent.putExtra("keyword", keyword);
 
                 startActivity(new Intent(intent));
             }
@@ -127,10 +126,10 @@ public class HomeFragment extends Fragment implements HomeView {
 
         presenter = new HomePresenter(this);
 
+        presenter.addachView(this);
         presenter.home();
 
 //        搜索
-//        presenter.search(keyword, page, count);
     }
 
 
@@ -174,5 +173,12 @@ public class HomeFragment extends Fragment implements HomeView {
 //        适配器
         HomeThreeAdapter homeThreeAdapter = new HomeThreeAdapter(getActivity(), commodityList3);
         rlv3.setAdapter(homeThreeAdapter);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        presenter.deatchView();
     }
 }
