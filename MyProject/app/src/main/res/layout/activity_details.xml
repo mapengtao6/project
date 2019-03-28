@@ -25,24 +25,88 @@
                 <com.bw.myproject.weiget.IdeaViewPager
                     android:id="@+id/viewPager"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@drawable/my_five" />
+                    android:layout_height="50dp" />
 
-                <ImageView
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/my_five" />
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/my_five" />
+                    <com.stx.xhb.xbanner.XBanner
+                        android:id="@+id/detail_xbanner"
+                        android:layout_width="500dp"
+                        android:layout_height="500dp"
+                        android:layout_gravity="center">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="800dp"
-                    android:src="@drawable/my_five" />
+                    </com.stx.xhb.xbanner.XBanner>
 
+                    <!--<android.support.v7.widget.RecyclerView
+                        android:id="@+id/detail_one_rlv"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:background="#ff0"></android.support.v7.widget.RecyclerView>-->
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/detail_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="价格"
+                            android:textColor="#f00"
+                            android:textSize="19sp" />
+
+                        <TextView
+                            android:id="@+id/detail_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="名称"
+                            android:textSize="19sp" />
+
+                        <TextView
+                            android:id="@+id/detail_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="简介"
+                            android:textSize="19sp" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/iv_cart"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginEnd="20dp"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginBottom="60dp"
+                                android:contentDescription="@null"
+                                android:src="@drawable/detail_shop" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <WebView
+                        android:id="@+id/detail_webview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"></WebView>
+
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -102,10 +166,11 @@
             android:paddingTop="24dp">
 
             <ImageView
+                android:id="@+id/detail_back"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:src="@drawable/back" />
+                android:src="@drawable/my_five" />
 
             <View
                 android:layout_width="158dp"
@@ -143,7 +208,8 @@
                     android:button="@null"
                     android:gravity="center"
                     android:text="宝贝"
-                    android:textColor="#00000000" />
+                    android:textColor="#00000000"
+                    android:textSize="18sp" />
 
                 <RadioButton
                     android:layout_width="0dp"
@@ -152,7 +218,8 @@
                     android:button="@null"
                     android:gravity="center"
                     android:text="评价"
-                    android:textColor="#00000000" />
+                    android:textColor="#00000000"
+                    android:textSize="18sp" />
 
                 <RadioButton
                     android:layout_width="0dp"
@@ -161,7 +228,8 @@
                     android:button="@null"
                     android:gravity="center"
                     android:text="详情"
-                    android:textColor="#00000000" />
+                    android:textColor="#00000000"
+                    android:textSize="18sp" />
 
                 <RadioButton
                     android:layout_width="0dp"
@@ -170,7 +238,8 @@
                     android:button="@null"
                     android:gravity="center"
                     android:text="推荐"
-                    android:textColor="#00000000" />
+                    android:textColor="#00000000"
+                    android:textSize="18sp" />
 
             </RadioGroup>
 

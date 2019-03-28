@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bw.myproject.R;
 import com.bw.myproject.bean.DetailBean;
@@ -43,8 +44,11 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.MyViewHold
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
 
         myViewHolder.price.setText("¥" + resultBean.getPrice());
-        myViewHolder.title.setError(resultBean.getCategoryName());
-        myViewHolder.name.setError(resultBean.getCommodityName());
+        myViewHolder.title.setError(resultBean.getCommodityName());
+
+        Toast.makeText(context, ""+resultBean.getCategoryName(), Toast.LENGTH_SHORT).show();
+
+        myViewHolder.name.setError(resultBean.getDescribe());
     }
 
     @Override

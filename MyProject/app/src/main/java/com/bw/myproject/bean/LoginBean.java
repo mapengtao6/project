@@ -61,6 +61,18 @@ public class LoginBean {
         private String sex;
         private String userId;
 
+        @Override
+        public String toString() {
+            return "ResultBean{" +
+                    "headPic='" + headPic + '\'' +
+                    ", nickName='" + nickName + '\'' +
+                    ", phone='" + phone + '\'' +
+                    ", sessionId='" + sessionId + '\'' +
+                    ", sex='" + sex + '\'' +
+                    ", userId='" + userId + '\'' +
+                    '}';
+        }
+
         public String getHeadPic() {
             return headPic;
         }
