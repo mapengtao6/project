@@ -1,5 +1,6 @@
 package com.bw.myproject.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         transaction.add(R.id.main_frme, shoppCardFragment);
         transaction.add(R.id.main_frme, orderFragment);
         transaction.add(R.id.main_frme, mineFragment);
-//        transaction.replace(R.id.main_frme, homeFragment);
+        transaction.replace(R.id.main_frme, homeFragment);
         transaction.commit();
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

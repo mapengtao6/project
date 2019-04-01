@@ -1,7 +1,9 @@
 package com.bw.myproject.activity;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.graphics.Color;
@@ -14,6 +16,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -28,16 +31,24 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bw.myproject.R;
 import com.bw.myproject.adapter.DetailAdapter;
 import com.bw.myproject.bean.DetailBean;
+import com.bw.myproject.bean.ShopSelBean;
+import com.bw.myproject.bean.SynShopBean;
+import com.bw.myproject.fragment.ShoppCardFragment;
 import com.bw.myproject.presenter.DetailPresenter;
 import com.bw.myproject.view.DetailView;
 import com.bw.myproject.weiget.IdeaScrollView;
 import com.bw.myproject.weiget.IdeaViewPager;
 import com.stx.xhb.xbanner.XBanner;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,7 +61,6 @@ import qiu.niorgai.StatusBarCompat;
 public class DetailsActivity extends AppCompatActivity implements DetailView {
 
 
-
     private ImageView mIvCart;
     private List<String> titles = new ArrayList<>();
     private float startY;//上下滑动的距离
@@ -59,6 +69,12 @@ public class DetailsActivity extends AppCompatActivity implements DetailView {
     private Timer timer;//计时器
     private long upTime;//记录抬起的时间
 
+
+    private List<SynShopBean> synShopBeans = new ArrayList<>();
+
+    private boolean isExitis;
+    private String sessionId;
+    private String userId;
 //    **********************
 
     private IdeaViewPager viewPager;
@@ -89,6 +105,8 @@ public class DetailsActivity extends AppCompatActivity implements DetailView {
     private TextView name;
     private XBanner xBanner;
     private WebView webView;
+    private Integer commodityId;
+    private DetailPresenter presenter;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -166,13 +184,12 @@ public class DetailsActivity extends AppCompatActivity implements DetailView {
         //-------------------------------------------------------------------------
 
 
-//        initData();
-
 //        控件
 //        *******************************************************************************************
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
 
-        String commodityId = intent.getStringExtra("commodityId");
+
+        commodityId = Integer.valueOf(intent.getStringExtra("commodityId"));
 
         back = findViewById(R.id.detail_back);
         price = findViewById(R.id.detail_price);
@@ -183,9 +200,29 @@ public class DetailsActivity extends AppCompatActivity implements DetailView {
         mIvCart = findViewById(R.id.iv_cart);
 
 
-        DetailPresenter presenter = new DetailPresenter(this);
+        presenter = new DetailPresenter(this);
 
-        presenter.datail(commodityId);
+
+        presenter.datail(commodityId + "");
+
+//        点击添加
+        mIvCart.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+
+                SharedPreferences sharedPreferences = getSharedPreferences("button", Context.MODE_PRIVATE);
+
+                userId = sharedPreferences.getString("userId", "");
+                sessionId = sharedPreferences.getString("sessionId", "");
+
+                if (userId != null && sessionId != null) {
+
+                    presenter.shopcarsel(userId, sessionId);
+                }
+            }
+        });
 
 //        点击事件
         back.setOnClickListener(new View.OnClickListener() {
@@ -214,6 +251,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailView {
             }
         });
     }
+
     private int getScreenWidth() {
         DisplayMetrics dm = new DisplayMetrics();
         this.getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -303,15 +341,6 @@ public class DetailsActivity extends AppCompatActivity implements DetailView {
     }
 
 
-
- /*   @Override
-    public void Detail(DetailBean detailBean) {
-        DetailBean.ResultBean result = detailBean.getResult();
-
-//        DetailAdapter detailAdapter = new DetailAdapter(this, result);
-
-    }*/
-
     public void setRadioButtonTextColor(float percentage) {
         if (Math.abs(percentage - currentPercentage) >= 0.1f) {
             for (int i = 0; i < radioGroup.getChildCount(); i++) {
@@ -369,10 +398,62 @@ public class DetailsActivity extends AppCompatActivity implements DetailView {
             }
         });
 
-//        加载网页
+//        加载网页1
         webView.loadDataWithBaseURL(null, result.getDetails(), "text/html", "utf-8", null);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new WebChromeClient());
 
+    }
+
+    //    查询购物车
+    @Override
+    public void ShopSel(ShopSelBean shopSelBean) {
+        List<ShopSelBean.ResultBean> result = shopSelBean.getResult();
+
+        if (result.size() > 0) {
+
+            for (int i = 0; i < result.size(); i++) {
+                int CommodityId = Integer.valueOf(result.get(i).getCommodityId());
+
+                int Count = Integer.valueOf(result.get(i).getCount());
+                synShopBeans.add(new SynShopBean(CommodityId, Count));
+            }
+        }
+
+        isExitis = false;
+        for (int i = 0; i < synShopBeans.size(); i++) {
+            if (synShopBeans.get(i).getCommodityId() == commodityId) {
+                synShopBeans.get(i).setCount(synShopBeans.get(i).getCount() + 1);
+                isExitis = true;
+                break;
+            }
+        }
+
+        if (!isExitis) {
+            synShopBeans.add(new SynShopBean(commodityId, 1));
+        }
+
+        try {
+            JSONArray jsonArray = new JSONArray();
+            for (int i = 0; i < synShopBeans.size(); i++) {
+                JSONObject jsonObject = new JSONObject();
+
+                jsonObject.put("commodityId", synShopBeans.get(i).getCommodityId());
+                jsonObject.put("count", synShopBeans.get(i).getCount());
+
+                jsonArray.put(jsonObject);
+            }
+
+            String s = jsonArray.toString();
+
+//            Log.i("yyyyy", s);
+
+//            Log.i("wwww", userId + sessionId);
+
+            presenter.synShop(userId, sessionId, s);
+            Toast.makeText(DetailsActivity.this, "同步成功~", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

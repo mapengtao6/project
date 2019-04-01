@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.bw.myproject.R;
 import com.bw.myproject.bean.LoginBean;
+import com.bw.myproject.fragment.MineFragment;
 import com.bw.myproject.presenter.LoginPresenter;
 import com.bw.myproject.utils.Utils;
 import com.bw.myproject.view.LoginView;
@@ -39,6 +41,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     CheckBox checkbox;
     private LoginPresenter presenter;
     private SharedPreferences sp;
+    private SharedPreferences.Editor edit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         sp = getSharedPreferences("button", Context.MODE_PRIVATE);
 
         boolean remind_pwd = sp.getBoolean("remind_pwd", false);
+
+        edit = sp.edit();
+
         if (remind_pwd) {
             String phone_sp = sp.getString("phone_sp", "");
             String pwd_sp = sp.getString("pwd_sp", "");
@@ -119,15 +125,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String status = loginBean.getStatus();
         String message = loginBean.getMessage();
 
+        LoginBean.ResultBean result = loginBean.getResult();
+
+        String sessionId = loginBean.getResult().getSessionId();
+        String userId = loginBean.getResult().getUserId();
+        String headPic = result.getHeadPic();
+        String nickName = result.getNickName();
+
+
+        edit.putString("userId", userId);
+        edit.putString("sessionId", sessionId);
+        edit.commit();
 
         if (status.equals("0000")) {
 
-            Log.i("xxxx", loginBean.getResult().toString());
+            Log.i("eeee", loginBean.getResult().toString());
 
             Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
-
-
+            edit.putString("headPic", headPic);
+            edit.putString("nickName", nickName);
+            edit.commit();
             finish();
+
         } else {
             Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
 

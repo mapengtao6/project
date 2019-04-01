@@ -1,6 +1,7 @@
 package com.bw.myproject.presenter;
 
 import com.bw.myproject.bean.DetailBean;
+import com.bw.myproject.bean.ShopSelBean;
 import com.bw.myproject.model.DetailModel;
 import com.bw.myproject.view.DetailView;
 
@@ -49,5 +50,22 @@ public class DetailPresenter<T> {
                 detailView.Detail(detailBean);
             }
         });
+    }
+
+    ////////////////查询购物车
+    public void shopcarsel(String userId, String sessionId) {
+
+        detailModel.shopcarsel(userId, sessionId);
+        detailModel.setShopCarLisenter(new DetailModel.onShopCarLisenter() {
+            @Override
+            public void onShopSel(ShopSelBean shopSelBean) {
+                detailView.ShopSel(shopSelBean);
+            }
+        });
+    }
+
+//    同步购物车
+    public void synShop(String userId, String sessionId, String s) {
+        detailModel.synShop(userId,sessionId,s);
     }
 }

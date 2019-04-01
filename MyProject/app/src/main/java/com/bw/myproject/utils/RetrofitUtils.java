@@ -48,7 +48,7 @@ public class RetrofitUtils {
 
     private static synchronized OkHttpClient getOkHttpClient() {
 
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+                HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
                 Log.i("mmm", message);

@@ -43,7 +43,6 @@ dependencies {
     implementation 'com.github.xiaohaibin:XBanner:1.6.1'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
 
-
     //详情
     implementation('com.github.niorgai:StatusBarCompat:2.1.4', {
         exclude group: 'com.android.support'
